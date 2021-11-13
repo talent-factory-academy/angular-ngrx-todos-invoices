@@ -27,16 +27,15 @@ export const addInvoiceFail = createAction('[Invoices] Add Fail');
  * Edit
  */
 export const editInvoice = createAction('[Invoices] Edit', props<{
-  invoice: Invoice
+  invoice: Omit<Invoice, 'id'>
 }>());
 
 export const editInvoiceSuccess = createAction('[Invoices] Edit Success', props<{
-  invoice: Invoice
+  invoice: Invoice,
+  updatedAt: string
 }>());
 
-export const editInvoiceFail = createAction('[Invoices] Edit Fail', props<{
-  invoice: Invoice
-}>());
+export const editInvoiceFail = createAction('[Invoices] Edit Fail');
 
 /**
  * Delete
@@ -49,6 +48,4 @@ export const deleteInvoiceSuccess = createAction('[Invoices] Delete Success', pr
   id: string
 }>());
 
-export const deleteInvoiceFail = createAction('[Invoices] Delete Fail', props<{
-  id: string
-}>());
+export const deleteInvoiceFail = createAction('[Invoices] Delete Fail');

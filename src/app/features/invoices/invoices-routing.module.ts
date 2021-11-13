@@ -6,12 +6,14 @@ import { InvoiceComponent } from './invoice.component';
 const routes: Routes = [
   {
     path: '',
-    component: InvoicesComponent
+    component: InvoicesComponent,
+    children: [
+      {
+        path: ':id',
+        component: InvoiceComponent
+      }
+    ]
   },
-  {
-    path: ':id',
-    component: InvoiceComponent
-  }
 ];
 
 @NgModule({

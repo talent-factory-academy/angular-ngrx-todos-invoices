@@ -8,16 +8,16 @@ import {
   loadInvoicesSuccess
 } from './invoices.actions';
 
-export const featureKey = 'invoices';
-
 export interface InvoicesState {
   invoices: Invoice[];
   loading: boolean;
+  updatedAt: string;
 }
 
 export const initialState: InvoicesState = {
   invoices: [],
-  loading: false
+  loading: false,
+  updatedAt: ''
 }
 
 export const invoicesReducer = createReducer(
@@ -26,7 +26,7 @@ export const invoicesReducer = createReducer(
   on(loadInvoicesSuccess, (state, action) => ({ ...state, invoices: action.invoices, loading: false })),
   on(loadInvoicesFail, (state) => ({ ...state, loading: false })),
   on(addInvoiceSuccess, (state, action) => ({ ...state, invoices: [...state.invoices, action.invoice] })),
-  on(editInvoiceSuccess, (state, action) => ({ ...state, invoices: state.invoices.map(invoice => {
+  on(editInvoiceSuccess, (state, action) => ({ ...state, updatedAt: action.updatedAt, invoices: state.invoices.map(invoice => {
       if (invoice.id === action.invoice.id) {
         return action.invoice;
       }

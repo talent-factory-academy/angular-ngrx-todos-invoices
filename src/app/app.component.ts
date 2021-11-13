@@ -2,9 +2,18 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  template: `
+    <mat-toolbar color="primary">
+      <a mat-button routerLink="/">
+        Home
+      </a>
+      <button mat-button routerLink="/invoices">
+        Invoices
+      </button>
+    </mat-toolbar>
+
+    <router-outlet></router-outlet>
+  `
 })
 export class AppComponent {
-  title = 'ng-playground';
 }

@@ -5,21 +5,27 @@ import { InvoicesRoutingModule } from './invoices-routing.module';
 import { InvoicesComponent } from './invoices.component';
 import { InvoiceComponent } from './invoice.component';
 import { StoreModule } from '@ngrx/store';
-import { featureKey, InvoicesEffects, invoicesReducer } from './store/invoices';
+import { InvoicesEffects, invoicesReducer } from './store/invoices';
+import { ClientsEffects, clientsReducer } from './store/clients';
 import { EffectsModule } from '@ngrx/effects';
+import { MaterialModule } from '../../material.module';
 
 @NgModule({
   declarations: [
     InvoicesComponent,
-    InvoiceComponent
+    InvoiceComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     InvoicesRoutingModule,
-    StoreModule.forFeature(featureKey, invoicesReducer),
-    EffectsModule.forFeature([InvoicesEffects])
+    MaterialModule,
+    StoreModule.forFeature('invoices', {
+      invoices: invoicesReducer,
+      clients: clientsReducer
+    }),
+    EffectsModule.forFeature([InvoicesEffects, ClientsEffects])
   ],
 })
 export class InvoicesModule {}

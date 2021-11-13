@@ -11,7 +11,7 @@ export class InvoicesService {
   constructor(private http: HttpClient) {}
 
   loadInvoices() {
-    return this.http.get(`${environment.apiUrl}/invoices`);
+    return this.http.get<Invoice[]>(`${environment.apiUrl}/invoices`);
   }
 
   deleteInvoice(id: string) {
@@ -19,10 +19,10 @@ export class InvoicesService {
   }
 
   addInvoice(invoice: Invoice) {
-    return this.http.post(`${environment.apiUrl}/invoices`, invoice);
+    return this.http.post<Invoice>(`${environment.apiUrl}/invoices`, invoice);
   }
 
   editInvoice(invoice: Invoice) {
-    return this.http.patch(`${environment.apiUrl}/invoices/${invoice.id}`, invoice);
+    return this.http.patch<Invoice>(`${environment.apiUrl}/invoices/${invoice.id}`, invoice);
   }
 }
