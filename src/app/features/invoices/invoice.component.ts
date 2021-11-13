@@ -1,11 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
-import { distinctUntilChanged, map, mapTo, startWith, take } from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 import { InvoiceItem } from './models';
-import { Store } from '@ngrx/store';
-import { deleteInvoice, editInvoice, selectCurrentInvoice, selectUpdatedAt } from './store/invoices';
-import { merge, Subscription } from 'rxjs';
-import { selectClients } from './store/clients';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-invoice',
@@ -22,6 +19,7 @@ import { selectClients } from './store/clients';
         <input matInput type="text" formControlName="subject">
       </mat-form-field>
 
+      <!--
       <mat-form-field appearance="fill">
         <mat-label>Client</mat-label>
         <mat-select formControlName="clientId">
@@ -31,6 +29,7 @@ import { selectClients } from './store/clients';
           </mat-option>
         </mat-select>
       </mat-form-field>
+      -->
 
 
       <div formArrayName="items">
@@ -67,10 +66,11 @@ import { selectClients } from './store/clients';
 })
 export class InvoiceComponent implements OnInit, OnDestroy {
 
-  private sub: Subscription | null = null;
+  // TODO
+  clients$ = of([]);
 
-  clients$ = this.store.select(selectClients);
-  updatedAt$ = this.store.select(selectUpdatedAt);
+  // TODO
+  updatedAt$ = of(null);
 
   form = this.fb.group({
     clientId: [null, Validators.required],
@@ -83,17 +83,11 @@ export class InvoiceComponent implements OnInit, OnDestroy {
     map(form => this.calculateTotal(form.items))
   )
 
-  currentInvoice$ = this.store.select(selectCurrentInvoice).pipe(
-    distinctUntilChanged((a, b) => a?.id === b?.id),
-  )
+  // TODO
+  currentInvoice$ = of(null);
 
-  isUpdated$ = merge(
-    this.form.valueChanges.pipe(mapTo(false)),
-    this.updatedAt$.pipe(mapTo(true)),
-    this.currentInvoice$.pipe(mapTo(true))
-  ).pipe(
-    distinctUntilChanged()
-  )
+  // TODO
+  isUpdated$ = of(true);
 
   statusColor$ = this.isUpdated$.pipe(
     map(isUpdated => isUpdated ? 'green' : 'red')
@@ -105,25 +99,18 @@ export class InvoiceComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private store: Store,
   ) {}
 
   ngOnInit() {
-    this.sub = this.currentInvoice$.subscribe(invoice => {
-      if (invoice) {
-        this.items.clear();
-
-        invoice.items.forEach(() => {
-          this.items.push(this.createItem());
-        });
-
-        this.form.reset(invoice);
-      }
-    })
+    // TODO
   }
 
   ngOnDestroy() {
-    this.sub?.unsubscribe();
+    // TODO
+  }
+
+  calculateTotal(items: InvoiceItem[]) {
+    return items.reduce((total: number, item: InvoiceItem) => total + item.price, 0)
   }
 
   createItem() {
@@ -142,27 +129,10 @@ export class InvoiceComponent implements OnInit, OnDestroy {
   }
 
   saveInvoice() {
-    if (this.form.valid) {
-      this.store.dispatch(editInvoice({
-        invoice: {
-          ...this.form.value,
-          total: this.calculateTotal(this.form.value.items)
-        }
-      }));
-    }
+    // TODO
   }
 
   deleteInvoice() {
-    this.currentInvoice$.pipe(
-      take(1)
-    ).subscribe(invoice => {
-      if (invoice) {
-        this.store.dispatch(deleteInvoice({ id: invoice.id }))
-      }
-    })
-  }
-
-  calculateTotal(items: InvoiceItem[]) {
-    return items.reduce((total: number, item: InvoiceItem) => total + item.price, 0)
+    // TODO
   }
 }

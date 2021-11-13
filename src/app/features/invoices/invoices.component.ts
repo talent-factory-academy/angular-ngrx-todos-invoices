@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { addInvoice, deleteInvoice, loadInvoices, selectInvoices } from './store/invoices';
-import { loadClients } from './store/clients';
+import { InvoicesService } from './services/invoices.service';
+import { ClientsService } from './services/clients.service';
+import { BehaviorSubject } from 'rxjs';
+import { Client, Invoice } from './models';
 
 @Component({
   selector: 'app-invoices',
@@ -36,16 +37,30 @@ import { loadClients } from './store/clients';
 })
 export class InvoicesComponent implements OnInit {
 
-  invoices$ = this.store.select(selectInvoices);
+  // TODO
+  invoices$ = new BehaviorSubject<Invoice[]>([]);
 
-  constructor(private store: Store) {}
+  // TODO
+  clients$ = new BehaviorSubject<Client[]>([]);
 
+  constructor(
+    private invoicesService: InvoicesService,
+    private clientsService: ClientsService
+  ) {}
+
+  // TODO
   ngOnInit() {
-    this.store.dispatch(loadInvoices());
-    this.store.dispatch(loadClients());
+    this.invoicesService.loadInvoices().subscribe(invoices => {
+      this.invoices$.next(invoices);
+    })
+
+    this.clientsService.loadClients().subscribe(clients => {
+      this.clients$.next(clients);
+    })
   }
 
+  // TODO
   addInvoice() {
-    this.store.dispatch(addInvoice())
+
   }
 }
