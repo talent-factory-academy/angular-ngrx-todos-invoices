@@ -1,39 +1,6 @@
 {
   "invoices": [
-    {
-      "id": "f9d3f608-41ee-453b-8499-1b2062cca664",
-      "subject": "Seconda",
-      "total": 130,
-      "items": [
-        {
-          "text": "item 1s",
-          "price": 10
-        },
-        {
-          "text": "item 3",
-          "price": 20
-        },
-        {
-          "text": "item 4",
-          "price": 100
-        }
-      ],
-      "clientId": "michele-stieven"
-    },
-    {
-      "id": "694ef0c1-e139-4231-b68d-0080b3dceced",
-      "subject": "Terza",
-      "total": 0,
-      "items": [],
-      "clientId": "michele-stieven"
-    },
-    {
-      "id": "6effb6cb-446a-4b33-b850-198e458ec726",
-      "subject": "Quarta",
-      "total": 0,
-      "items": [],
-      "clientId": "fabio-biondi"
-    }
+
   ],
   "clients": [
     {
@@ -44,5 +11,6 @@
       "name": "Fabio Biondi",
       "id": "fabio-biondi"
     }
-  ]
+  ],
+  "todos": []
 }
