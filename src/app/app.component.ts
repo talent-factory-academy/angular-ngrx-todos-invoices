@@ -1,41 +1,21 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { BehaviorSubject, combineLatest, ReplaySubject } from 'rxjs';
-import { map, share, switchMap } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   template: `
-    {{ (user$ | async)?.username }}
-    {{ (user$ | async)?.username }}
-    {{ (user$ | async)?.username }}
+    <button routerLink="">Home</button>
+    <button routerLink="users">Users</button>
+<!--    <button routerLink="users/1">User 1</button>-->
+<!--    <button routerLink="users/2">User 2</button>-->
+<!--    <button routerLink="users/3">User 3</button>-->
 
-    <div *ngIf="showSecondDiv">
-      Second div
-      {{ (user$ | async)?.username }}
-    </div>
+<!--    <button routerLink="/login">Login</button>-->
+<!--    <button routerLink="/register">Register</button>-->
 
-    <button (click)="userId$.next('2')">+</button>
+    <button routerLink="/oauth">OAuth</button>
+    <hr>
+    <router-outlet></router-outlet>
   `,
 })
 export class AppComponent {
-
-  showSecondDiv = false;
-
-  userId$ = new BehaviorSubject<string | null>('1');
-
-  user$ = this.userId$.pipe(
-    switchMap(userId =>
-      this.http.get<any>('https://jsonplaceholder.typicode.com/users/' + userId)
-    ),
-    share({
-
-    })
-  )
-
-  constructor(private http: HttpClient) {
-    setTimeout(() => {
-      this.showSecondDiv = true;
-    }, 3000)
-  }
 }
