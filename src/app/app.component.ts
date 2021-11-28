@@ -7,6 +7,9 @@ import { Component } from '@angular/core';
       <a mat-button routerLink="/">
         Home
       </a>
+      <button mat-button routerLink="/todos">
+        Todos
+      </button>
       <button mat-button routerLink="/invoices">
         Invoices
       </button>

@@ -12,5 +12,16 @@
       "id": "fabio-biondi"
     }
   ],
-  "todos": []
+  "todos": [
+    {
+      "id": "123",
+      "text": "Fare la spesa",
+      "completed": false
+    },
+    {
+      "id": "456",
+      "text": "Mangiare",
+      "completed": false
+    }
+  ]
 }
