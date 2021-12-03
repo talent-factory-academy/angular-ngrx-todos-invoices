@@ -15,7 +15,12 @@ import { TodoFilter } from '../models';
         <mat-option value="ACTIVE">Active</mat-option>
       </mat-select>
     </mat-form-field>
-  `
+  `,
+  styles: [`
+    mat-form-field {
+      width: 100%;
+    }
+  `]
 })
 export class TodosFilterComponent {
   @Input() filter!: TodoFilter;

@@ -1,6 +1,17 @@
 {
   "invoices": [
-
+    {
+      "id": "8c2d3adf-00fa-4ac5-a241-98bf2c2d7735",
+      "subject": "Prima fattura",
+      "total": 10,
+      "items": [
+        {
+          "text": "Consulenza",
+          "price": 10
+        }
+      ],
+      "clientId": "michele-stieven"
+    }
   ],
   "clients": [
     {
@@ -16,12 +27,7 @@
     {
       "id": "123",
       "text": "Fare la spesa",
-      "completed": false
-    },
-    {
-      "id": "456",
-      "text": "Mangiare",
-      "completed": false
+      "completed": true
     }
   ]
 }

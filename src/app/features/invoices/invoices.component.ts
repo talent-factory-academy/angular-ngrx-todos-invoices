@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { InvoicesService } from './services/invoices.service';
-import { ClientsService } from './services/clients.service';
-import { BehaviorSubject } from 'rxjs';
-import { Client, Invoice } from './models';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { addInvoice, loadInvoices, selectInvoices, startInvoices, stopInvoices } from './store/invoices';
+import { loadClients, selectClients } from './store/clients';
 
 @Component({
   selector: 'app-invoices',
@@ -35,32 +34,23 @@ import { Client, Invoice } from './models';
   `],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class InvoicesComponent implements OnInit {
+export class InvoicesComponent implements OnInit, OnDestroy {
 
-  // TODO
-  invoices$ = new BehaviorSubject<Invoice[]>([]);
+  invoices$ = this.store.select(selectInvoices);
 
-  // TODO
-  clients$ = new BehaviorSubject<Client[]>([]);
+  constructor(private store: Store) {}
 
-  constructor(
-    private invoicesService: InvoicesService,
-    private clientsService: ClientsService
-  ) {}
-
-  // TODO
   ngOnInit() {
-    this.invoicesService.loadInvoices().subscribe(invoices => {
-      this.invoices$.next(invoices);
-    })
-
-    this.clientsService.loadClients().subscribe(clients => {
-      this.clients$.next(clients);
-    })
+    this.store.dispatch(startInvoices());
+    this.store.dispatch(loadInvoices());
+    this.store.dispatch(loadClients());
   }
 
-  // TODO
   addInvoice() {
+    this.store.dispatch(addInvoice());
+  }
 
+  ngOnDestroy() {
+    this.store.dispatch(stopInvoices());
   }
 }

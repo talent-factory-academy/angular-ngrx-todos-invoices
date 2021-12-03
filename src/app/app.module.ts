@@ -12,6 +12,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { localStorageSync } from 'ngrx-store-localstorage';
 import { EffectsModule } from '@ngrx/effects';
+import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
+import { RouterEffects } from './store/router/router.effects';
 
 export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
   return localStorageSync({
@@ -19,7 +21,7 @@ export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionRedu
     rehydrate: true
   })(reducer);
 }
-const metaReducers: Array<MetaReducer<any, any>> = [];
+const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
 
 @NgModule({
   declarations: [
@@ -32,8 +34,13 @@ const metaReducers: Array<MetaReducer<any, any>> = [];
     HttpClientModule,
     AppRoutingModule,
     MaterialModule,
-    StoreModule.forRoot({}),
-    EffectsModule.forRoot([]),
+    StoreModule.forRoot({
+      router: routerReducer
+    }, {
+      metaReducers
+    }),
+    EffectsModule.forRoot([RouterEffects]),
+    StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,

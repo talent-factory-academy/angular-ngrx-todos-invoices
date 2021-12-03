@@ -18,7 +18,7 @@ export class InvoicesService {
     return this.http.delete(`${environment.apiUrl}/invoices/${id}`);
   }
 
-  addInvoice(invoice: Invoice) {
+  addInvoice(invoice: Omit<Invoice, 'id'>) {
     return this.http.post<Invoice>(`${environment.apiUrl}/invoices`, invoice);
   }
 

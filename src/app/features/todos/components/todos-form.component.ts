@@ -13,7 +13,12 @@ import { FormControl } from '@angular/forms';
         (keyup.enter)="submit()"
       >
     </mat-form-field>
-  `
+  `,
+  styles: [`
+    mat-form-field {
+      width: 100%;
+    }
+  `]
 })
 export class TodosFormComponent {
   newTodo = new FormControl('');

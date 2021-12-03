@@ -13,4 +13,16 @@ export class TodosService {
   getTodos() {
     return this.http.get<Todo[]>(`${env.apiUrl}/todos`);
   }
+
+  deleteTodo(id: string) {
+    return this.http.delete(`${env.apiUrl}/todos/${id}`);
+  }
+
+  addTodo(todo: Omit<Todo, 'id'>) {
+    return this.http.post<Todo>(`${env.apiUrl}/todos`, todo);
+  }
+
+  patchTodo(todo: Todo) {
+    return this.http.patch<Todo>(`${env.apiUrl}/todos/${todo.id}`, todo);
+  }
 }

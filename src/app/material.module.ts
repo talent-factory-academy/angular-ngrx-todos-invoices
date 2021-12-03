@@ -72,11 +72,5 @@ const modules = [
   imports: [CommonModule, ...modules],
   exports: [...modules],
   declarations: [],
-  providers: [
-    {
-      provide: MAT_DATE_LOCALE,
-      useValue: 'it-IT'
-    }
-  ]
 })
 export class MaterialModule {}

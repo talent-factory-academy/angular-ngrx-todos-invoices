@@ -1,55 +1,63 @@
 import { createReducer, on } from '@ngrx/store';
+import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { Todo, TodoFilter } from '../models';
-import { addTodo, getTodos, getTodosSuccess, removeTodo, setCompleted, setFilter } from './todos.actions';
+import {
+  addTodoSuccess,
+  getTodos,
+  getTodosSuccess,
+  removeTodoSuccess,
+  setCompletedSuccess,
+  setFilter,
+} from './todos.actions';
 
-export interface TodosState {
-  todos: Todo[],
+export interface TodosState extends EntityState<Todo> {
   filter: TodoFilter,
+  isLoading: boolean,
 }
 
-export const initialState: TodosState = {
-  todos: [],
-  filter: 'ALL'
-}
+export const adapter: EntityAdapter<Todo> = createEntityAdapter<Todo>({
+  selectId: todo => todo.id,
+  sortComparer: (a: Todo, b: Todo) => a.text.localeCompare(b.text)
+})
+
+export const initialState: TodosState = adapter.getInitialState({
+  filter: 'ALL',
+  isLoading: false,
+})
 
 export const todosReducer = createReducer(
   initialState,
-  on(addTodo, (state, action) => {
-    const newTodo: Todo = {
-      id: ''+ Math.random(),
-      text: action.text,
-      completed: false
-    }
-    return {
-      ...state,
-      todos: [...state.todos, newTodo]
-    }
+  on(addTodoSuccess, (state, action) => {
+    return adapter.addOne(action.todo, state);
   }),
-  on(removeTodo, (state, action) => ({
-    ...state,
-    todos: state.todos.filter(todo =>
-      todo.id !== action.id
-    )
-  })),
+  on(removeTodoSuccess, (state, action) => {
+    return adapter.removeOne(action.id, state);
+  }),
   on(setFilter, (state, action) => ({
     ...state,
     filter: action.filter
   })),
-  on(setCompleted, (state, action) => {
-    return {
-      ...state,
-      todos: state.todos.map(todo => {
-        if (todo.id !== action.id) return todo;
-        return {
-          ...todo,
-          completed: action.isComplete
-        }
-      })
-    }
+  on(setCompletedSuccess, (state, action) => {
+    return adapter.updateOne({
+      id: action.todo.id,
+      changes: action.todo
+    }, state);
   }),
-  on(getTodos, (state, action) => state),
-  on(getTodosSuccess, (state, action) => ({
+  on(getTodos, (state) => ({
     ...state,
-    todos: action.todos
+    isLoading: true
   })),
-)
+  on(getTodosSuccess, (state, action) => {
+    return adapter.setAll(action.todos, {
+      ...state,
+      isLoading: false
+    })
+  })
+);
+
+export const {
+  selectIds,
+  selectEntities,
+  selectAll,
+  selectTotal,
+} = adapter.getSelectors();

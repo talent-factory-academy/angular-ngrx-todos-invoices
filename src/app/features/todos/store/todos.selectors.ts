@@ -1,16 +1,21 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { TodosState } from './todos.reducer';
+import { selectAll, TodosState } from './todos.reducer';
 
 export const selectTodosState = createFeatureSelector<TodosState>('todos');
 
 export const selectTodos = createSelector(
   selectTodosState,
-  (state) => state.todos
+  selectAll
 );
 
 export const selectFilter = createSelector(
   selectTodosState,
   (state) => state.filter
+)
+
+export const selectIsLoading = createSelector(
+  selectTodosState,
+  (state) => state.isLoading
 )
 
 export const selectFilteredTodos = createSelector(

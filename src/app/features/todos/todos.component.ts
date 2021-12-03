@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Todo, TodoFilter } from './models';
+import { TodoFilter } from './models';
 import { Store } from '@ngrx/store';
-import { selectFilter, selectFilteredTodos } from './store/todos.selectors';
-import { addTodo, getTodos, removeTodo, setCompleted, setFilter } from './store/todos.actions';
+import { selectFilter, selectFilteredTodos, selectIsLoading } from './store/todos.selectors';
+import * as Actions from './store/todos.actions';
 
 @Component({
   selector: 'app-todos',
@@ -20,14 +19,12 @@ import { addTodo, getTodos, removeTodo, setCompleted, setFilter } from './store/
       (removeTodo)="removeTodo($event)"
       (setCompleted)="setCompleted($event)"
     ></app-todos-list>
+    <p *ngIf="isLoading$ | async">Loading...</p>
   `,
   styles: [`
-    :host {
+    :host, app-todos-form, app-todos-filter {
       display: block;
       margin: 1rem;
-    }
-    mat-form-field {
-      width: 100%;
     }
   `]
 })
@@ -35,26 +32,27 @@ export class TodosComponent implements OnInit {
 
   todos$ = this.store.select(selectFilteredTodos);
   filter$ = this.store.select(selectFilter);
+  isLoading$ = this.store.select(selectIsLoading);
 
   constructor(private store: Store) {}
 
   ngOnInit() {
-    this.store.dispatch(getTodos());
+    this.store.dispatch(Actions.getTodos());
   }
 
   addTodo(text: string) {
-    this.store.dispatch(addTodo({ text }))
+    this.store.dispatch(Actions.addTodo({ text }))
   }
 
   removeTodo(id: string) {
-    this.store.dispatch(removeTodo({ id }))
+    this.store.dispatch(Actions.removeTodo({ id }))
   }
 
   setFilter(filter: TodoFilter) {
-    this.store.dispatch(setFilter({ filter }));
+    this.store.dispatch(Actions.setFilter({ filter }));
   }
 
   setCompleted({ isComplete, id }: { isComplete: boolean, id: string }) {
-    this.store.dispatch(setCompleted({ isComplete, id }))
+    this.store.dispatch(Actions.setCompleted({ isComplete, id }))
   }
 }

@@ -13,12 +13,4 @@ export class ClientsService {
   loadClients() {
     return this.http.get<Client[]>(`${environment.apiUrl}/clients`);
   }
-
-  deleteClient(id: string) {
-    return this.http.delete(`${environment.apiUrl}/clients/${id}`);
-  }
-
-  addClient(client: Partial<Client>) {
-    return this.http.post<Client>(`${environment.apiUrl}/clients`, client);
-  }
 }
