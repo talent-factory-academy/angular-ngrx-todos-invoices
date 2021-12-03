@@ -1,4 +1,4 @@
-import { createReducer, on } from '@ngrx/store';
+import { createFeature, createReducer, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { Todo, TodoFilter } from '../models';
 import {
@@ -55,9 +55,7 @@ export const todosReducer = createReducer(
   })
 );
 
-export const {
-  selectIds,
-  selectEntities,
-  selectAll,
-  selectTotal,
-} = adapter.getSelectors();
+export const todosFeature = createFeature({
+  name: 'todos',
+  reducer: todosReducer
+});

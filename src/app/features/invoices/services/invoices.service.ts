@@ -22,7 +22,7 @@ export class InvoicesService {
     return this.http.post<Invoice>(`${environment.apiUrl}/invoices`, invoice);
   }
 
-  editInvoice(invoice: Invoice) {
+  editInvoice(invoice: Partial<Invoice>) {
     return this.http.patch<Invoice>(`${environment.apiUrl}/invoices/${invoice.id}`, invoice);
   }
 }

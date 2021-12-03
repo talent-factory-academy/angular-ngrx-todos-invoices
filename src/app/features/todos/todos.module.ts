@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../../material.module';
 import { StoreModule } from '@ngrx/store';
-import { todosReducer } from './store/todos.reducer';
+import { todosFeature } from './store/todos.reducer';
 import { TodosFilterComponent } from './components/todos-filter.component';
 import { TodosFormComponent } from './components/todos-form.component';
 import { TodosListComponent } from './components/todos-list.component';
@@ -24,7 +24,7 @@ import { TodosEffects } from './store/todos.effects';
         component: TodosComponent
       }
     ]),
-    StoreModule.forFeature('todos', todosReducer),
+    StoreModule.forFeature(todosFeature),
     EffectsModule.forFeature([TodosEffects])
   ],
   declarations: [

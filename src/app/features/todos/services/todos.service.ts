@@ -22,7 +22,7 @@ export class TodosService {
     return this.http.post<Todo>(`${env.apiUrl}/todos`, todo);
   }
 
-  patchTodo(todo: Todo) {
+  patchTodo(todo: Partial<Todo>) {
     return this.http.patch<Todo>(`${env.apiUrl}/todos/${todo.id}`, todo);
   }
 }

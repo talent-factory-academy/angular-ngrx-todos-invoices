@@ -1,22 +1,25 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { selectAll, TodosState } from './todos.reducer';
+import { createSelector } from '@ngrx/store';
+import { adapter, todosFeature } from './todos.reducer';
 
-export const selectTodosState = createFeatureSelector<TodosState>('todos');
+// Feature selectors
+export const {
+  selectTodosState,
+  selectFilter,
+  selectIsLoading,
+} = todosFeature;
+
+// Entity selectors
+export const {
+  selectIds,
+  selectEntities,
+  selectAll,
+  selectTotal,
+} = adapter.getSelectors();
 
 export const selectTodos = createSelector(
   selectTodosState,
   selectAll
 );
-
-export const selectFilter = createSelector(
-  selectTodosState,
-  (state) => state.filter
-)
-
-export const selectIsLoading = createSelector(
-  selectTodosState,
-  (state) => state.isLoading
-)
 
 export const selectFilteredTodos = createSelector(
   selectTodos,
