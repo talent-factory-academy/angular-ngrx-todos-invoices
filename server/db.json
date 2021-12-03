@@ -1,0 +1,33 @@
+{
+  "invoices": [
+    {
+      "id": "8c2d3adf-00fa-4ac5-a241-98bf2c2d7735",
+      "subject": "Prima fattura",
+      "total": 10,
+      "items": [
+        {
+          "text": "Consulenza",
+          "price": 10
+        }
+      ],
+      "clientId": "michele-stieven"
+    }
+  ],
+  "clients": [
+    {
+      "name": "Michele Stieven",
+      "id": "michele-stieven"
+    },
+    {
+      "name": "Fabio Biondi",
+      "id": "fabio-biondi"
+    }
+  ],
+  "todos": [
+    {
+      "id": "123",
+      "text": "Fare la spesa",
+      "completed": true
+    }
+  ]
+}
